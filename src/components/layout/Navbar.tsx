@@ -27,7 +27,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/" className="py-2 px-5 md:py-3 md:px-10">
           <img 
-            src="/nsut-logo.jpg" 
+            src="/nsut-logo.png" 
             alt="NSUT Logo" 
             className="h-10 md:h-12 object-contain"
           />
@@ -80,7 +80,7 @@ const Navbar = () => {
                   <div className="flex justify-between items-center p-4 border-b dark:border-white/20">
                     <Link to="/">
                       <img 
-                        src="/nsut-logo.jpg" 
+                        src="/nsut-logo.png" 
                         alt="NSUT Logo" 
                         className="h-8 object-contain"
                       />
