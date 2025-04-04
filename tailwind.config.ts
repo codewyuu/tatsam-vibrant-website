@@ -13,8 +13,16 @@ export default {
 	theme: {
 		container: {
 			center: true,
-			padding: '2rem',
+			padding: {
+				DEFAULT: '1rem',
+				sm: '1.5rem',
+				md: '2rem'
+			},
 			screens: {
+				sm: '640px',
+				md: '768px',
+				lg: '1024px',
+				xl: '1280px',
 				'2xl': '1400px'
 			}
 		},
@@ -124,8 +132,29 @@ export default {
 			},
 			backgroundImage: {
 				'diagonal-stripes': 'repeating-linear-gradient(45deg, #00000010, #00000010 10px, transparent 10px, transparent 20px)'
-			}
+			},
+			fontSize: {
+				'2xs': '0.625rem',
+			},
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		function({ addUtilities }) {
+			const newUtilities = {
+				'.scrollbar-thin': {
+					'scrollbarWidth': 'thin',
+					'&::-webkit-scrollbar': {
+						width: '4px',
+						height: '4px',
+					},
+					'&::-webkit-scrollbar-thumb': {
+						backgroundColor: 'rgba(0, 0, 0, 0.3)',
+						borderRadius: '4px',
+					},
+				},
+			}
+			addUtilities(newUtilities, ['responsive', 'hover'])
+		},
+	],
 } satisfies Config;

@@ -13,7 +13,7 @@ const MemberCard: React.FC<MemberCardProps> = ({
   image,
 }) => {
   return (
-    <div className="border border-black/20">
+    <div className="border border-black/20 h-full">
       <div>
         {image ? (
           <img 
@@ -22,15 +22,15 @@ const MemberCard: React.FC<MemberCardProps> = ({
             className="w-full aspect-square object-cover"
           />
         ) : (
-          <div className="w-full aspect-square placeholder-box">
+          <div className="w-full aspect-square placeholder-box flex items-center justify-center text-sm">
             Image Placeholder
           </div>
         )}
       </div>
       
-      <div className="p-4 text-center">
-        <h3 className="font-bold">{name}</h3>
-        <p className="text-sm text-gray-600">{position}</p>
+      <div className="p-3 md:p-4 text-center">
+        <h3 className="font-bold text-sm md:text-base truncate">{name}</h3>
+        <p className="text-xs md:text-sm text-gray-600 truncate">{position}</p>
       </div>
     </div>
   );

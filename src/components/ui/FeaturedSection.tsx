@@ -20,11 +20,11 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({
   backgroundClass = "bg-diagonal-stripes",
 }) => {
   return (
-    <section className={`w-full py-24 ${backgroundClass}`}>
-      <div className="container mx-auto px-6">
-        <div className="max-w-2xl">
-          <h1 className="text-5xl font-bold mb-6">{title}</h1>
-          <p className="text-lg mb-8">{description}</p>
+    <section className={`w-full py-12 md:py-24 ${backgroundClass}`}>
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="max-w-xs sm:max-w-md md:max-w-2xl">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">{title}</h1>
+          <p className="text-base md:text-lg mb-6 md:mb-8">{description}</p>
           <Link to={linkTo}>
             <Button variant="outline" className="border-black hover:bg-black hover:text-white transition-colors">
               {linkText}

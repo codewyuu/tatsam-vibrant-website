@@ -39,12 +39,12 @@ const GalleryItem: React.FC<GalleryItemProps> = ({
       {productId && productName && (
         <div className="absolute bottom-0 left-0 right-0 bg-white/80 p-2 text-xs">
           <div>#{productId}</div>
-          <div>{productName}</div>
+          <div className="truncate">{productName}</div>
         </div>
       )}
       
       <button 
-        className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white border border-black/20 opacity-0 group-hover:opacity-100 hover:bg-black/5 transition-all"
+        className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center bg-white border border-black/20 opacity-100 md:opacity-0 group-hover:opacity-100 hover:bg-black/5 transition-all"
         onClick={(e) => {
           e.stopPropagation();
           setLiked(!liked);
