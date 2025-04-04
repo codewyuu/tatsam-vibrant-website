@@ -5,68 +5,17 @@ import Footer from "@/components/layout/Footer";
 import SectionHeading from "@/components/ui/SectionHeading";
 import GalleryItem from "@/components/ui/GalleryItem";
 import NewsletterForm from "@/components/ui/NewsletterForm";
-import { Image, Filter, X } from "lucide-react";
+import { Image, Filter } from "lucide-react";
 import { useTranslation } from "@/hooks/useTranslation";
 import gallery from "@/data/gallery";
 import events from "@/data/events";
-
-interface GalleryModalProps {
-  image: string;
-  title: string;
-  eventName?: string;
-  date?: string;
-  onClose: () => void;
-}
-
-const GalleryModal: React.FC<GalleryModalProps> = ({
-  image,
-  title,
-  eventName,
-  date,
-  onClose,
-}) => {
-  return (
-    <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" onClick={onClose}>
-      <div className="max-w-4xl w-full bg-white" onClick={(e) => e.stopPropagation()}>
-        <div className="relative">
-          {image ? (
-            <img 
-              src={image} 
-              alt={title} 
-              className="w-full max-h-[70vh] object-contain"
-            />
-          ) : (
-            <div className="w-full h-[70vh] placeholder-box">
-              Image Placeholder
-            </div>
-          )}
-          <button 
-            className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-white border border-black/20 hover:bg-black/5 transition-colors"
-            onClick={onClose}
-          >
-            <X size={24} />
-          </button>
-        </div>
-        
-        <div className="p-6">
-          <h3 className="text-xl font-bold mb-2">{title}</h3>
-          {eventName && <p className="mb-1">{eventName}</p>}
-          {date && <p className="text-gray-600">{date}</p>}
-        </div>
-      </div>
-    </div>
-  );
-};
+import SlideShow from "@/components/ui/SlideShow";
 
 const Gallery = () => {
   const t = useTranslation();
   const [eventFilter, setEventFilter] = useState<string | null>(null);
-  const [selectedImage, setSelectedImage] = useState<null | {
-    image: string;
-    title: string;
-    eventName?: string;
-    date?: string;
-  }>(null);
+  const [slideShowOpen, setSlideShowOpen] = useState<boolean>(false);
+  const [initialSlideIndex, setInitialSlideIndex] = useState<number>(0);
   
   // Get all events
   const allEvents = events;
@@ -75,6 +24,11 @@ const Gallery = () => {
   const filteredGallery = eventFilter 
     ? gallery.filter(item => item.eventId === eventFilter)
     : gallery;
+
+  const handleImageClick = (index: number) => {
+    setInitialSlideIndex(index);
+    setSlideShowOpen(true);
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -128,7 +82,7 @@ const Gallery = () => {
             
             {filteredGallery.length > 0 ? (
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {filteredGallery.map(item => {
+                {filteredGallery.map((item, index) => {
                   const eventDetails = events.find(event => event.id === item.eventId);
                   
                   return (
@@ -138,12 +92,7 @@ const Gallery = () => {
                       alt={item.title}
                       productId={item.eventId}
                       productName={eventDetails?.title}
-                      onClick={() => setSelectedImage({
-                        image: item.image,
-                        title: item.title,
-                        eventName: eventDetails?.title,
-                        date: item.date
-                      })}
+                      onClick={() => handleImageClick(index)}
                     />
                   );
                 })}
@@ -175,13 +124,11 @@ const Gallery = () => {
         </section>
       </main>
       
-      {selectedImage && (
-        <GalleryModal 
-          image={selectedImage.image}
-          title={selectedImage.title}
-          eventName={selectedImage.eventName}
-          date={selectedImage.date}
-          onClose={() => setSelectedImage(null)}
+      {slideShowOpen && (
+        <SlideShow 
+          images={filteredGallery}
+          initialIndex={initialSlideIndex}
+          onClose={() => setSlideShowOpen(false)}
         />
       )}
       
