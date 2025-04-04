@@ -76,7 +76,7 @@
   }
   
   .placeholder-box {
-    @apply border border-black/25 flex items-center justify-center;
+    @apply border border-black/25 dark:border-white/25 flex items-center justify-center;
   }
   
   .grid-pattern {
