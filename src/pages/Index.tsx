@@ -48,7 +48,7 @@ const Index = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="placeholder-box aspect-[4/3] flex items-center justify-center">
-                Event Image Placeholder
+              <img src="/1.png" alt="Event" className="object-contain w-full h-full" />
               </div>
               
               <div className="flex flex-col justify-center">
