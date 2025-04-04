@@ -1,11 +1,12 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { 
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
-  CarouselPrevious
+  CarouselPrevious,
+  type CarouselApi
 } from "@/components/ui/carousel";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,8 +24,27 @@ const SlideShow: React.FC<SlideShowProps> = ({
   initialIndex = 0,
   onClose 
 }) => {
-  const [currentIndex, setCurrentIndex] = React.useState(initialIndex);
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [api, setApi] = useState<CarouselApi>();
   const currentImage = images[currentIndex];
+
+  // This effect handles updating the current index when the carousel API changes
+  React.useEffect(() => {
+    if (!api) return;
+    
+    const onSelect = () => {
+      setCurrentIndex(api.selectedScrollSnap());
+    };
+    
+    api.on("select", onSelect);
+    
+    // Set initial slide
+    api.scrollTo(initialIndex);
+    
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api, initialIndex]);
 
   return (
     <div className="fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center" onClick={onClose}>
@@ -54,10 +74,7 @@ const SlideShow: React.FC<SlideShowProps> = ({
             startIndex: initialIndex,
           }}
           className="w-full"
-          onSelect={(api) => {
-            const selectedIndex = api?.selectedScrollSnap() || 0;
-            setCurrentIndex(selectedIndex);
-          }}
+          setApi={setApi}
         >
           <CarouselContent>
             {images.map((image, index) => (
@@ -116,7 +133,9 @@ const SlideShow: React.FC<SlideShowProps> = ({
                 "flex-shrink-0 w-16 h-16 overflow-hidden border-2",
                 currentIndex === idx ? "border-white" : "border-transparent opacity-70 hover:opacity-100"
               )}
-              onClick={() => setCurrentIndex(idx)}
+              onClick={() => {
+                if (api) api.scrollTo(idx);
+              }}
             >
               {img.image ? (
                 <img 
