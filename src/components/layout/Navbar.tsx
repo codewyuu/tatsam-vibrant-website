@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, Search, X } from "lucide-react";
@@ -20,16 +19,20 @@ const Navbar = () => {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Searching for:", searchQuery);
-    // Implement search functionality
   };
 
   return (
     <header className="w-full">
       <div className="flex justify-between items-center py-3 px-4 md:px-6 border-b border-black/20 dark:border-white/20">
-        <Link to="/" className="border border-black/50 dark:border-white/50 py-2 px-5 md:py-3 md:px-10">
-          <div className="font-bold text-2xl md:text-3xl">T</div>
+        {/* Logo */}
+        <Link to="/" className="py-2 px-5 md:py-3 md:px-10">
+          <img 
+            src="/nsut-logo.jpg" 
+            alt="NSUT Logo" 
+            className="h-10 md:h-12 object-contain"
+          />
         </Link>
-        
+
         {/* Desktop navigation */}
         {!isMobile && (
           <div className="flex items-center space-x-4">
@@ -52,7 +55,7 @@ const Navbar = () => {
                 <Search size={16} />
               </button>
             </form>
-            
+
             <div className="flex gap-4 items-center">
               <Link to="/login" className="text-xs font-medium">LOGIN</Link>
               <Link to="/register" className="text-xs font-medium">REGISTER</Link>
@@ -60,7 +63,7 @@ const Navbar = () => {
             </div>
           </div>
         )}
-        
+
         {/* Mobile menu button */}
         {isMobile && (
           <div className="flex items-center gap-2">
@@ -75,7 +78,13 @@ const Navbar = () => {
               <SheetContent side="right" className="p-0 dark:bg-gray-900 dark:text-white">
                 <div className="flex flex-col h-full">
                   <div className="flex justify-between items-center p-4 border-b dark:border-white/20">
-                    <Link to="/" className="font-bold text-2xl">Tatsam</Link>
+                    <Link to="/">
+                      <img 
+                        src="/nsut-logo.jpg" 
+                        alt="NSUT Logo" 
+                        className="h-8 object-contain"
+                      />
+                    </Link>
                     <div className="flex items-center gap-3">
                       <ThemeToggle />
                       <SheetClose asChild>
@@ -86,7 +95,7 @@ const Navbar = () => {
                       </SheetClose>
                     </div>
                   </div>
-                  
+
                   <div className="flex-1 overflow-auto p-4">
                     <form 
                       onSubmit={handleSearchSubmit}
@@ -107,7 +116,7 @@ const Navbar = () => {
                         <Search size={18} />
                       </button>
                     </form>
-                    
+
                     <nav className="flex flex-col space-y-1">
                       <MobileNavLink to="/">HOME</MobileNavLink>
                       <MobileNavLink to="/about">ABOUT US</MobileNavLink>
@@ -118,7 +127,7 @@ const Navbar = () => {
                       <MobileNavLink to="/blog">BLOG</MobileNavLink>
                     </nav>
                   </div>
-                  
+
                   <div className="p-4 border-t dark:border-white/20 flex justify-center gap-6">
                     <Link to="/login" className="font-medium">LOGIN</Link>
                     <Link to="/register" className="font-medium">REGISTER</Link>
@@ -136,7 +145,7 @@ const Navbar = () => {
           <Link to="/" className="p-4 flex items-center justify-center border-r border-black/20 dark:border-white/20">
             <div className="bg-black dark:bg-white rounded-full w-6 h-6"></div>
           </Link>
-          
+
           <div className="flex-1 flex justify-between">
             <div className="flex">
               <NavLink to="/about">ABOUT US</NavLink>
